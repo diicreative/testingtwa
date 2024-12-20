@@ -1,9 +1,12 @@
 import axios from 'axios';
 
-export async function POST(req) {
+export async function POST(req, res) {
+  const data = await req.json(); // Example of using `req`
+  res.status(200).json({ message: "Button sent successfully", data });
+
   const BOT_TOKEN = '7586074521:AAGoBQZN0T_7FMAIH7ukJBUvZhcimsaA9dU'; // Replace with your Telegram bot token
   const CHAT_ID = '@prodocks_bot'; // Replace with your chat ID or user ID
-  const MINI_APP_URL = 'https://myfirsttwa-44guv3uxt-dickys-projects-bbee7f3d.vercel.app'; // Replace with your Vercel app URL
+  const MINI_APP_URL = 'https://myfirsttwa.vercel.app'; // Replace with your Vercel app URL
 
   try {
     const response = await axios.post(
