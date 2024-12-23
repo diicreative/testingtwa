@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
@@ -39,16 +39,16 @@ export async function POST(request: Request) {
     } else {
       return NextResponse.json({ error: 'Failed to fetch user data from Telegram' }, { status: 400 });
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error in API route:', error);
 
-    // Check if the error has a response (e.g., from the Telegram API)
-    if (error.response) {
-      console.error('Error Response:', error.response.data);
-      return NextResponse.json({ error: error.response.data.description || 'Failed to fetch user data from Telegram' }, { status: error.response.status });
+    // If the error is of type AxiosError (for Axios-specific errors), handle it
+    if (error instanceof AxiosError) {
+      console.error('Axios Error Response:', error.response?.data);
+      return NextResponse.json({ error: error.response?.data.description || 'Failed to fetch user data from Telegram' }, { status: error.response?.status || 500 });
     }
 
-    // If no response, it's likely a network error or unexpected issue
+    // If the error is of an unknown type, return a generic server error response
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
