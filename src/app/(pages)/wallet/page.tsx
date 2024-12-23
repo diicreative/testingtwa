@@ -1,4 +1,5 @@
-'use client'
+'use client';
+
 import { useState } from 'react';
 
 type UserInfo = {
@@ -28,11 +29,13 @@ export default function WalletPage() {
         alert(data.error);
       }
     } catch (error) {
+      // Log the error to satisfy ESLint and for better debugging
+      console.error('Error fetching user info:', error);
       alert('Error fetching user info.');
     }
   };
 
-return (
+  return (
     <div>
       <h1>Telegram User Info</h1>
       <input
