@@ -1,38 +1,54 @@
 import axios from 'axios';
 import { NextResponse } from 'next/server';
 
-const TELEGRAM_API_BASE = 'https://api.telegram.org/bot';
-
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const { chatId } = await req.json();
+    // Extract chatId from the body of the request
+    const { chatId } = await request.json();
 
+    console.log('Received chatId:', chatId); // Debugging log
+
+    // Check if chatId is valid (not empty or undefined)
     if (!chatId) {
-      return NextResponse.json({ error: 'Chat ID is required' }, { status: 400 });
+      return NextResponse.json({ error: 'chatId is required' }, { status: 400 });
     }
 
+    // Ensure that the Telegram Bot Token is available
     const botToken = process.env.TELEGRAM_BOT_TOKEN;
-
     if (!botToken) {
-      return NextResponse.json({ error: 'Telegram bot token not set' }, { status: 500 });
+      console.error('Telegram Bot Token is not set');
+      return NextResponse.json({ error: 'Telegram Bot Token is not set' }, { status: 500 });
     }
 
-    // Get user info
-    const response = await axios.get(
-      `${TELEGRAM_API_BASE}${botToken}/getChat`,
-      { params: { chat_id: chatId } }
-    );
+    // Construct the Telegram API URL with the provided chatId
+    const telegramApiUrl = `https://api.telegram.org/bot${botToken}/getChat?chat_id=${chatId}`;
+    console.log('Telegram API URL:', telegramApiUrl); // Debugging log for the API URL
 
-    const user = response.data.result;
+    // Make the request to the Telegram API using Axios
+    const response = await axios.get(telegramApiUrl);
+    const userData = response.data;
 
-    return NextResponse.json({
-      username: user.username,
-      isPremium: user.is_premium || false,
-    });
-  } catch (error) {
-    // Log the error to prevent unused variable issues
-    console.error('Error fetching Telegram user:', error);
+    console.log('Telegram API Response:', userData); // Log the response from Telegram API
 
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    // Check if the response has the expected result and return the data
+    if (userData.ok) {
+      return NextResponse.json({
+        username: userData.result.username,
+        isPremium: userData.result.premium || false, // Adjust based on actual response structure
+      });
+    } else {
+      return NextResponse.json({ error: 'Failed to fetch user data from Telegram' }, { status: 400 });
+    }
+  } catch (error: any) {
+    console.error('Error in API route:', error);
+
+    // Check if the error has a response (e.g., from the Telegram API)
+    if (error.response) {
+      console.error('Error Response:', error.response.data);
+      return NextResponse.json({ error: error.response.data.description || 'Failed to fetch user data from Telegram' }, { status: error.response.status });
+    }
+
+    // If no response, it's likely a network error or unexpected issue
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

@@ -10,12 +10,14 @@ type UserInfo = {
 export default function WalletPage() {
   const [userInfo, setUserInfo] = useState<UserInfo>(null);
 
-  // Hardcoded chatId (set this to the chatId you want to fetch)
-  const chatId = '@prodocks_bot';
+  // Use a valid chatId (replace with actual bot username or user/group ID)
+  const chatId = '@prodocks_bot'; // Make sure this is correct!
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
+        console.log('Sending chatId:', chatId); // Log the chatId sent to the API
+
         const response = await fetch('/api/telegram/user', {
           method: 'POST',
           headers: {
@@ -25,11 +27,12 @@ export default function WalletPage() {
         });
 
         const data = await response.json();
+        console.log('Received data:', data); // Log the response from the server
 
         if (response.ok) {
           setUserInfo(data);
         } else {
-          alert(data.error);
+          alert(data.error || 'Failed to fetch user info');
         }
       } catch (error) {
         console.error('Error fetching user info:', error);
@@ -40,7 +43,7 @@ export default function WalletPage() {
     if (chatId) {
       fetchUserInfo();
     }
-  }, [chatId]); // Effect will run when `chatId` changes
+  }, [chatId]);
 
   return (
     <div>
