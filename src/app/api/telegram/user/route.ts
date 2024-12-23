@@ -27,19 +27,12 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       username: user.username,
-      isPremium: user.is_premium || false, // Telegram supports premium info for some users
+      isPremium: user.is_premium || false,
     });
-  } catch (error: unknown) {
-    let errorMessage = 'An unexpected error occurred.';
+  } catch (error) {
+    // Log the error to prevent unused variable issues
+    console.error('Error fetching Telegram user:', error);
 
-    if (axios.isAxiosError(error)) {
-      // Handle Axios-specific errors
-      errorMessage = error.response?.data?.description || error.message;
-    } else if (error instanceof Error) {
-      // Handle generic errors
-      errorMessage = error.message;
-    }
-
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
