@@ -11,7 +11,7 @@ export default function WalletPage() {
   const [userInfo, setUserInfo] = useState<UserInfo>(null);
 
   // Hardcoded chatId (set this to the chatId you want to fetch)
-  const chatId = 'your-chat-id-here';
+  const chatId = '@prodocks_bot';
 
   useEffect(() => {
     const fetchUserInfo = async () => {
