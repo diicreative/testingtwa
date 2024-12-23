@@ -8,11 +8,12 @@ type UserInfo = {
 } | null;
 
 export default function WalletPage() {
-  const [chatId, setChatId] = useState('');  // You can set a default chatId if needed
   const [userInfo, setUserInfo] = useState<UserInfo>(null);
 
+  // Hardcoded chatId (set this to the chatId you want to fetch)
+  const chatId = 'your-chat-id-here';
+
   useEffect(() => {
-    // You can set a default chatId here or pass it dynamically if available
     const fetchUserInfo = async () => {
       try {
         const response = await fetch('/api/telegram/user', {
@@ -39,7 +40,7 @@ export default function WalletPage() {
     if (chatId) {
       fetchUserInfo();
     }
-  }, [chatId]); // This effect runs whenever `chatId` changes
+  }, [chatId]); // Effect will run when `chatId` changes
 
   return (
     <div>
