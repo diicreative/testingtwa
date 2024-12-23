@@ -1,63 +1,44 @@
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
+import WebApp from '@twa-dev/sdk'
+import { useEffect, useState } from 'react'
 
-type UserInfo = {
-  username: string;
-  isPremium: boolean;
-} | null;
+// Define the interface for user data
+interface UserData {
+  id: number;
+  first_name: string;
+  last_name?: string;
+  username?: string;
+  language_code: string;
+  is_premium?: boolean;
+}
 
 export default function WalletPage() {
-  const [userInfo, setUserInfo] = useState<UserInfo>(null);
-
-  // Use a valid chatId (replace with actual bot username or user/group ID)
-  const chatId = '@prodocks_bot'; // Make sure this is correct!
+  const [userData, setUserData] = useState<UserData | null>(null)
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        console.log('Sending chatId:', chatId); // Log the chatId sent to the API
-
-        const response = await fetch('/api/telegram/user', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ chatId }),
-        });
-
-        const data = await response.json();
-        console.log('Received data:', data); // Log the response from the server
-
-        if (response.ok) {
-          setUserInfo(data);
-        } else {
-          alert(data.error || 'Failed to fetch user info');
-        }
-      } catch (error) {
-        console.error('Error fetching user info:', error);
-        alert('Error fetching user info.');
-      }
-    };
-
-    if (chatId) {
-      fetchUserInfo();
+    if (WebApp.initDataUnsafe.user) {
+      setUserData(WebApp.initDataUnsafe.user as UserData)
     }
-  }, [chatId]);
+  }, [])
 
   return (
-    <div>
-      <h1>Telegram User Info</h1>
-
-      {userInfo ? (
-        <div>
-          <h2>User Info:</h2>
-          <p>Username: {userInfo.username}</p>
-          <p>Premium Status: {userInfo.isPremium ? 'Yes' : 'No'}</p>
-        </div>
+    <main className="p-4">
+      {userData ? (
+        <>
+          <h1 className="text-2xl font-bold mb-4">User Data</h1>
+          <ul>
+            <li>ID: {userData.id}</li>
+            <li>First Name: {userData.first_name}</li>
+            <li>Last Name: {userData.last_name || 'N/A'}</li>
+            <li>Username: {userData.username || 'N/A'}</li>
+            <li>Language Code: {userData.language_code}</li>
+            <li>Is Premium: {userData.is_premium ? 'Yes' : 'No'}</li>
+          </ul>
+        </>
       ) : (
-        <p>No user info available</p>
+        <div>Loading...</div>
       )}
-    </div>
-  );
+    </main>
+  )
 }
