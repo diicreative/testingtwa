@@ -1,9 +1,14 @@
 'use client'
 import { useState } from 'react';
 
+type UserInfo = {
+  username: string;
+  isPremium: boolean;
+} | null;
+
 export default function WalletPage() {
   const [chatId, setChatId] = useState('');
-  const [userInfo, setUserInfo] = useState<any>(null);
+  const [userInfo, setUserInfo] = useState<UserInfo>(null);
 
   const fetchUserInfo = async () => {
     try {
@@ -27,8 +32,8 @@ export default function WalletPage() {
     }
   };
 
-    return (
-      <div>
+return (
+    <div>
       <h1>Telegram User Info</h1>
       <input
         type="text"
