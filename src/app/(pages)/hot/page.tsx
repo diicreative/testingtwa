@@ -1,4 +1,5 @@
 import UsersPicture from '@/app/components/UsersPicture';
+import Link from 'next/link';
 
 export default function HotPage() {
   const currentDate = new Intl.DateTimeFormat('en-US', {
@@ -7,10 +8,10 @@ export default function HotPage() {
   }).format(new Date());
 
     return (
-      <div className="mt-10 w-full flex justify-between px-4 items-center">
+      <div className="w-full flex justify-between items-center">
         <div className="text-2xl font-bold flex gap-2 items-baseline">Hot Project <div className="text-lg text-blue-400 font-medium">{currentDate}</div>
         </div>
-        <div><UsersPicture/></div>
+        <div><Link href="/wallet"><UsersPicture/></Link></div>
       
       </div>
     )

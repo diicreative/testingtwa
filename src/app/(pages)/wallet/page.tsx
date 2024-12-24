@@ -37,10 +37,10 @@ export default function WalletPage() {
   }, []);
 
   return (
-    <main className="p-4">
+    <main>
       {userData ? (
         <>
-          <div className="flex flex-col items-center pt-8">
+          <div className="flex flex-col items-center">
             {userData.photo_url ? (
               <img
                 src={userData.photo_url}

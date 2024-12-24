@@ -35,7 +35,7 @@ export default function UsersPicture() {
       <main className="p-4">
         {userData ? (
           <>
-            <div className="flex flex-col items-center pt-8">
+            <div className="flex flex-col items-center">
               {userData.photo_url ? (
                 <img
                   src={userData.photo_url}
