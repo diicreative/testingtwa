@@ -12,7 +12,7 @@ const bot = new Bot(botToken);
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    console.log('Received body:', body);  // Log the incoming body for debugging
+    console.log('Received body:', body); // Log the incoming body for debugging
 
     bot.on('message', (ctx) => {
       const user = ctx.from;
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     await bot.handleUpdate(body);
     return NextResponse.json({ message: 'Webhook received!' });
   } catch (error) {
-    console.error('Error in POST handler:', error);
-    return NextResponse.json({ error: 'Error processing the request' }, { status: 500 });
+    console.error('Error in POST handler:', error); // Log detailed error message
+    return NextResponse.json({ error: 'Error processing the request', details: error.message }, { status: 500 });
   }
 }
