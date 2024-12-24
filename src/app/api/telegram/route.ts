@@ -26,18 +26,26 @@ bot.on('message', (ctx) => {
 // Main POST handler to process updates
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    console.log('Received body:', body);  // Log the incoming body for debugging
+    // Read raw body before parsing it
+    const body = await req.text(); // Use `text()` to get the raw body as a string
+    console.log('Received raw body:', body); // Log raw body for debugging
 
-    await bot.handleUpdate(body);
+    if (!body) {
+      console.error('Empty body received!');
+      return NextResponse.json({ error: 'Empty body received' }, { status: 400 });
+    }
+
+    // Now parse the body
+    const jsonBody = JSON.parse(body); // Parse the raw body to JSON
+    console.log('Parsed body:', jsonBody); // Log the parsed body for debugging
+
+    await bot.handleUpdate(jsonBody); // Process the parsed body with bot
     return NextResponse.json({ message: 'Webhook received!' });
   } catch (error: unknown) {
-    // Narrow the type of `error` to `Error`
     if (error instanceof Error) {
-      console.error('Error in POST handler:', error); // Log detailed error message
+      console.error('Error in POST handler:', error);
       return NextResponse.json({ error: 'Error processing the request', details: error.message }, { status: 500 });
     } else {
-      // Handle unexpected error types
       console.error('Unknown error in POST handler:', error);
       return NextResponse.json({ error: 'Unknown error occurred', details: 'No error message available' }, { status: 500 });
     }
