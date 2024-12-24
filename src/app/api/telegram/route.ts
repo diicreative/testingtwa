@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Bot } from 'grammy';
 
-// Ensure the bot token is defined, otherwise throw an error
 const botToken = process.env.TELEGRAM_BOT_TOKEN;
 
 if (!botToken) {
@@ -10,25 +9,28 @@ if (!botToken) {
 
 const bot = new Bot(botToken);
 
-// Handle the incoming POST request for the webhook
 export async function POST(req: Request) {
-  const body = await req.json();
+  try {
+    const body = await req.json();
+    console.log('Received body:', body);  // Log the incoming body for debugging
 
-  // Handle incoming messages from the Telegram bot
-  bot.on('message', (ctx) => {
-    const user = ctx.from; // Get user data from the context
-    console.log(user); // Log user data for debugging
+    bot.on('message', (ctx) => {
+      const user = ctx.from;
+      console.log('User data:', user);  // Log user data
 
-    // Return the user data in the response
-    return NextResponse.json({
-      userId: user.id,
-      firstName: user.first_name,
-      lastName: user.last_name,
-      username: user.username,
-      languageCode: user.language_code,
+      return NextResponse.json({
+        userId: user.id,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        username: user.username,
+        languageCode: user.language_code,
+      });
     });
-  });
 
-  await bot.handleUpdate(body); // Pass the update data to the bot
-  return NextResponse.json({ message: 'Webhook received!' });
+    await bot.handleUpdate(body);
+    return NextResponse.json({ message: 'Webhook received!' });
+  } catch (error) {
+    console.error('Error in POST handler:', error);
+    return NextResponse.json({ error: 'Error processing the request' }, { status: 500 });
+  }
 }

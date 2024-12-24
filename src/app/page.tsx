@@ -4,8 +4,8 @@ import UserDataDisplay from './components/UserDataDisplay';
 export default function Home() {
   return (
     <div>
-      <div>
-      <h1>Welcome to the Telegram Web App</h1>
+      <div className="text-xl p-10 text-center">My Apps</div>
+      <div className="px-4">
       <UserDataDisplay />
     </div>
 

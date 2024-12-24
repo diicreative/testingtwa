@@ -2,7 +2,7 @@ export default function WalletPage() {
   
   return (
     <div>
-    <h1>Welcome to the Telegram Web App</h1>
+    <h1>Wallet Page</h1>
   </div>
   )
 }
