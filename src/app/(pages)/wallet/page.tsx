@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import WebApp from '@twa-dev/sdk'
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+import WebApp from '@twa-dev/sdk'; // Ensure this is only accessed on the client
 
 // Define the interface for user data
 interface UserData {
@@ -14,13 +14,14 @@ interface UserData {
 }
 
 export default function WalletPage() {
-  const [userData, setUserData] = useState<UserData | null>(null)
+  const [userData, setUserData] = useState<UserData | null>(null);
 
   useEffect(() => {
-    if (WebApp.initDataUnsafe.user) {
-      setUserData(WebApp.initDataUnsafe.user as UserData)
+    // Ensure this runs only in the browser
+    if (typeof window !== 'undefined' && WebApp?.initDataUnsafe?.user) {
+      setUserData(WebApp.initDataUnsafe.user as UserData);
     }
-  }, [])
+  }, []);
 
   return (
     <main className="p-4">
@@ -40,5 +41,5 @@ export default function WalletPage() {
         <div>Loading...</div>
       )}
     </main>
-  )
+  );
 }
