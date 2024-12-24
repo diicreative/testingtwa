@@ -53,8 +53,6 @@ export default function WalletPage() {
             <h2 className="text-xl font-bold">@{userData.username || 'N/A'}</h2>
           </div>
           <div className="flex flex-col items-center pt-8">
-          <div className="bg-gray-300 rounded-full w-20 h-20 flex items-center justify-center"><span className="text-gray-500">No Photo</span></div>
-          <h2 className="text-xl font-bold pt-2">@UserName</h2>
           <div className='pt-8 w-full'>
             <div className='bg-white rounded-xl flex flex-col px-4 w-full'>
               <div className='flex p-4 border-b justify-between items-center'>
