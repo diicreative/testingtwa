@@ -1,16 +1,25 @@
-'use client';
+'use client'; // Indicate this is a client-side component
 
 import React, { useState, useEffect } from 'react';
 
+// Define the structure of the user data
+interface UserData {
+  userId: number;
+  firstName: string;
+  lastName?: string;
+  username?: string;
+  languageCode?: string;
+}
+
 const UserDataDisplay = () => {
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<UserData | null>(null); // Use UserData type
 
   useEffect(() => {
     // Fetch user data from the API route
     const fetchUserData = async () => {
       try {
         const response = await fetch('/api/telegram', { method: 'POST' });
-        const data = await response.json();
+        const data: UserData = await response.json(); // Use UserData type for the fetched data
         setUserData(data); // Store the fetched user data
       } catch (error) {
         console.error('Error fetching user data:', error);
