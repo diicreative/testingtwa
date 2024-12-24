@@ -49,7 +49,7 @@ const BottomNav: React.FC = () => {
         <li  className="flex flex-col items-center">
           <Link href="/wallet" className={`${isActive('/wallet') ? 'flex flex-col items-center transition-colors text-blue-500' : 'flex flex-col items-center hover:text-blue-500 transition-colors text-gray-500'}`}>
           <span className="text-lg"><FaWallet /></span>
-          <span className='text-s pt-2'>Wallet</span>
+          <span className='text-s pt-2'>Profile</span>
           </Link>
         </li>
 
