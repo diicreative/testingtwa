@@ -1,8 +1,8 @@
-'use client'
-
 export default function WalletPage() {
   
   return (
-   <div>Hello</div>
+    <div>
+    <h1>Welcome to the Telegram Web App</h1>
+  </div>
   )
 }
