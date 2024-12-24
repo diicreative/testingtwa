@@ -43,7 +43,7 @@ export default function WalletPage() {
               <img
                 src={userData.photo_url}
                 alt={`${userData.first_name}'s profile`}
-                className="rounded-full w-20 h-20 object-cover"
+                className="rounded-full w-20 h-20 object-cover bg-slate-300"
               />
             ) : (
               <div className="bg-gray-200 rounded-full w-20 h-20 flex items-center justify-center">

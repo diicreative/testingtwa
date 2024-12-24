@@ -17,7 +17,7 @@ const BottomNav: React.FC = () => {
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white border border-gray-200 rounded-t-3xl shadow-lg">
       
-      <ul className="flex justify-between items-center px-6 py-6 text-xs text-gray-700">
+      <ul className="flex justify-between items-baseline px-6 py-4 text-xs text-gray-700">
         <li  className="flex flex-col items-center">
           <Link href="/hot" className={`${isActive('/hot') ? 'flex flex-col items-center transition-colors text-blue-500' : 'flex flex-col items-center hover:text-blue-500 transition-colors text-gray-500'}`}>
           <span className="text-lg"><FaFire /></span>
@@ -34,8 +34,8 @@ const BottomNav: React.FC = () => {
 
         <li  className="flex flex-col items-center">
           <Link href="/" className={`${isActive('/') ? 'flex flex-col items-center transition-colors text-blue-500' : 'flex flex-col items-center hover:text-blue-500 transition-colors text-gray-500'}`}>
-          <span className="text-lg"><AiFillAppstore /></span>
-          <span className='text-s pt-2'>My Apps</span>
+          <span className="text-3xl"><AiFillAppstore /></span>
+          <span className='text-xs pt-2'>My Apps</span>
           </Link>
         </li>
 
