@@ -8,7 +8,7 @@ export default function HotPage() {
   }).format(new Date());
 
     return (
-      <div className="flex justify-between items-start bg-slate-500">
+      <div className="flex justify-between items-start">
         <div className="text-2xl font-bold flex gap-2 items-baseline">Hot Project <div className="text-lg text-blue-400 font-medium">{currentDate}</div>
         </div>
         <div><Link href="/wallet"><UsersPicture/></Link></div>
