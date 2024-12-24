@@ -5,6 +5,8 @@ import WebApp from '@twa-dev/sdk';
 import { FaCoins } from "react-icons/fa6";
 import { SlArrowRight } from "react-icons/sl";
 import { MdVerified } from "react-icons/md";
+import Link from 'next/link';
+import { FaWallet } from "react-icons/fa6";
 
 // Define the interface for user data
 interface UserData {
@@ -59,11 +61,16 @@ export default function WalletPage() {
                 <div className='flex gap-3 items-center'><FaCoins className='text-orange-500' />My Balance</div> <div className='text-green-500'>$ 1,000,000</div>
               </div>
               <div className='flex p-4 border-b justify-between items-center'>
-                <div className='flex gap-3 items-center'><MdVerified className='text-blue-600 text-lg' />Biolink Subscription</div> <div className=''><SlArrowRight /></div>
+                <div className='flex gap-3 items-center'><MdVerified className='text-blue-600 text-lg' />Biolink Subscription</div>
+                <div><Link href="/biolink"><SlArrowRight /></Link></div>
               </div>
             </div>
           </div>
         </div>
+        <div className='pt-10 pb-4'>connect your TON wallet</div>
+          <div className='flex px-8 py-4 border-b justify-between items-center bg-white w-full rounded-xl'><div className='flex gap-3 items-center'><FaWallet className='text-blue-600 text-lg'/>Connect Wallet</div>
+          <div><Link href="/biolink"><SlArrowRight /></Link></div>
+          </div>
         </>
       ) : (
         <div className="flex flex-col items-center pt-8">
@@ -75,9 +82,14 @@ export default function WalletPage() {
                 <div className='flex gap-3 items-center'><FaCoins className='text-orange-500' />My Balance</div> <div className='text-green-500'>0</div>
               </div>
               <div className='flex p-4 border-b justify-between items-center'>
-                <div className='flex gap-3 items-center'><MdVerified className='text-blue-600 text-lg' />Biolink Subscription</div> <div className=''><SlArrowRight /></div>
+                <div className='flex gap-3 items-center'><MdVerified className='text-blue-600 text-lg' />Biolink Subscription</div>
+                <div><Link href="/biolink"><SlArrowRight /></Link></div>
               </div>
             </div>
+          </div>
+          <div className='pt-10 pb-4'>connect your TON wallet</div>
+          <div className='flex px-8 py-4 border-b justify-between items-center bg-white w-full rounded-xl'><div className='flex gap-3 items-center'><FaWallet className='text-blue-600 text-lg'/>Connect Wallet</div>
+          <div><SlArrowRight /></div>
           </div>
         </div>
       )}
